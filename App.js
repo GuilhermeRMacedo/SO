@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Header from './src/Components/Header'
 import Inputs from './src/Components/Inputs'
 import Buttons from './src/Components/Buttons'
+import Processes from './src/Components/Processes'
 
 export default class App extends React.Component {
   state = {
@@ -39,7 +40,7 @@ export default class App extends React.Component {
     }
   }
 
-  
+
 
   render() {
     return (
@@ -52,8 +53,12 @@ export default class App extends React.Component {
         />
         <Buttons
           placeQuantumChangedHandler={this.placeQuantumChangedHandler}
-          quantumHasValue = {this.state.quantumHasValue}
+          quantumHasValue={this.state.quantumHasValue}
         />
+        
+        {/* <Processes /> */}
+        
+
       </View>
     );
   }
