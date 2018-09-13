@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 import Process from './Process'
 
@@ -28,14 +28,10 @@ const processes = (props) => (
         />
         <Process
             totalTime={2}
-            processId='p2'
+            processId='p7'
             deadLine={3}
         />
-        <Process
-            totalTime={2}
-            processId='p2'
-            deadLine={3}
-        />
+        
     </View>
 )
 

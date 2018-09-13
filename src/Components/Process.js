@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 const process = (props) => (
     <View style={styles.processo}>

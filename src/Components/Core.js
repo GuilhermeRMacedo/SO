@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
-const cores = (props) => (
+const core = (props) => (
     <View style={styles.core}>
         <View style={styles.tempoADecrementar}>
-            <Text>{props.totalTime}</Text>
+            <Text style={{color: '#fff'}}>{props.totalTime}</Text>
         </View>
         <View style={styles.idprocesso}>
-            <Text>{props.processId}</Text>
+            <Text style={{color: '#fff'}}>{props.processId}</Text>
         </View>
     </View>
 )
@@ -18,12 +18,11 @@ const styles = StyleSheet.create({
         height: 70,
         borderWidth: 1,
         borderRadius: 2,
-        borderColor: '#000',
+        borderColor: '#fff',
         marginBottom: 2
     },
     tempoADecrementar: {
-        alignItems: 'center',
-        marginTop: 5
+        marginLeft: 55
     },
     idprocesso: {
         alignItems: 'center',

@@ -5,6 +5,7 @@ import Header from './src/Components/Header'
 import Inputs from './src/Components/Inputs'
 import Buttons from './src/Components/Buttons'
 import Processes from './src/Components/Processes'
+import Cores from './src/Components/Cores'
 
 export default class App extends React.Component {
   state = {
@@ -45,7 +46,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.mom}>
-        <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text>
+        {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text>
         <Header />
         <Inputs
           placeCoresChangedHandler={this.placeCoresChangedHandler}
@@ -54,10 +55,20 @@ export default class App extends React.Component {
         <Buttons
           placeQuantumChangedHandler={this.placeQuantumChangedHandler}
           quantumHasValue={this.state.quantumHasValue}
-        />
-        
-        {/* <Processes /> */}
-        
+        /> */}
+
+
+
+        <View style={{ flexDirection: 'row' }}>
+          <View>
+            <Processes />
+          </View>
+          <View style={{marginLeft: 110}}>
+            <Cores />
+          </View>
+        </View>
+
+
 
       </View>
     );
