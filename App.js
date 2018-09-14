@@ -1,18 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
-import Header from './src/Components/Header'
-import Inputs from './src/Components/Inputs'
-import Buttons from './src/Components/Buttons'
-import Processes from './src/Components/Processes'
-import Cores from './src/Components/Cores'
+import Home from './src/Views/Home';
+import Scheduler from './src/Views/Scheduler'
 
 export default class App extends React.Component {
   state = {
     cores: '',
     processos: '',
     quantum: '',
-    quantumHasValue: false
+    quantumHasValue: false,
   }
 
   placeCoresChangedHandler = (input) => {
@@ -45,40 +40,9 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.mom}>
-        {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text>
-        <Header />
-        <Inputs
-          placeCoresChangedHandler={this.placeCoresChangedHandler}
-          placeProcessosChangedHandler={this.placeProcessosChangedHandler}
-        />
-        <Buttons
-          placeQuantumChangedHandler={this.placeQuantumChangedHandler}
-          quantumHasValue={this.state.quantumHasValue}
-        /> */}
-
-
-
-        <View style={{ flexDirection: 'row' }}>
-          <View>
-            <Processes />
-          </View>
-          <View style={{marginLeft: 110}}>
-            <Cores />
-          </View>
-        </View>
-
-
-
-      </View>
+      <Home />
+      //<Scheduler />
+      
     );
   }
 }
-
-const styles = StyleSheet.create({
-  mom: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: '#800080'
-  }
-});
