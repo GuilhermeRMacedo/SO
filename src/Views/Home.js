@@ -1,18 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StackNavigator } from 'react-navigation'
 
 import Header from '../Components/Header'
 import Inputs from '../Components/Inputs'
-import Buttons from '../Components/Buttons'
+import {Buttons} from '../Components/Buttons'
 import Processes from '../Components/Processes'
 import Cores from '../Components/Cores'
 
-export default class Home extends React.Component {
+export class Home extends React.Component {
+    static navigationOptions = {
+        header: null
+    };
+
     state = {
         cores: '',
         processos: '',
         quantum: '',
-        quantumHasValue: false
+        quantumHasValue: false,
+        screenHomeIsOpen: false
     }
 
     placeCoresChangedHandler = (input) => {
@@ -41,7 +47,14 @@ export default class Home extends React.Component {
         }
     }
 
+    onPress = () => {
+        Alert.alert('apertou botao')
+    }
+
+
     render() {
+        const { navigate } = this.props.navigation;
+        const state = this.state;
         return (
             <View style={styles.mom}>
 
@@ -52,13 +65,18 @@ export default class Home extends React.Component {
                     placeProcessosChangedHandler={this.placeProcessosChangedHandler}
                 />
                 <Buttons
+                    navigate = {navigate}
                     placeQuantumChangedHandler={this.placeQuantumChangedHandler}
-                    quantumHasValue={this.state.quantumHasValue}
+                    quantumHasValue={this.quantumHasValue}
+                    state={this.state}
+
+                    onPress={this.onPress}
                 />
 
             </View>
-        );
+        )
     }
+
 }
 
 const styles = StyleSheet.create({
@@ -68,3 +86,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#800080'
     }
 });
+
+// export default home;

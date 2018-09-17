@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native'
 
-const buttons = (props) => (
-    <View style={styles.mom}>
-        <View style={styles.buttons}>
-            <Button title="Shortest Job First" color='#660066' disabled={props.quantumHasValue}/>
-        </View>
-        <View style={styles.roundRobin}>
-            <Button title="Round Robin" color='#660066' />
-            <TextInput
-                placeholder="Quantum"
-                keyboardType='numeric'
-                style={styles.placeInput} 
-                onChangeText={props.placeQuantumChangedHandler}/>
-        </View>
-        <View style={styles.buttons}>
-            <Button title="Least Time to Go" color='#660066' disabled={props.quantumHasValue}/>
-        </View>
-    </View>
-)
+export class Buttons extends React.Component {
+    render() {
+        return (
+            <View style={styles.mom}>
+                <View style={styles.buttons}>
+                    <Button title="Shortest Job First" color='#660066' disabled={this.props.quantumHasValue} onPress={()=>this.props.navigate('SchedulerRT', {state: this.props.state})} />
+                </View>
+                <View style={styles.roundRobin}>
+                    <Button title="Round Robin" color='#660066' />
+                    <TextInput
+                        placeholder="Quantum"
+                        keyboardType='numeric'
+                        style={styles.placeInput}
+                        onChangeText={this.props.placeQuantumChangedHandler} />
+                </View>
+                <View style={styles.buttons}>
+                    <Button title="Least Time to Go" color='#660066' disabled={this.props.quantumHasValue} />
+                </View>
+            </View>
+        )
+    }
+}
 
 
 const styles = StyleSheet.create({
@@ -48,5 +52,3 @@ const styles = StyleSheet.create({
     }
 
 })
-
-export default buttons;
