@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, View, FlatList } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, Button, Alert } from 'react-native';
 
 import Header from '../Components/Header'
 import Inputs from '../Components/Inputs'
@@ -35,12 +35,21 @@ export class Scheduler extends React.Component {
             })
         }
         this.setState({
-            listProcesses: listProcesses
+            listProcesses: this.insertionSort(listProcesses)
         })
     }
 
-    insertionSort = (array) => {
-        
+    insertionSort = (arr) => {  //https://stackoverflow.com/questions/14320101/insert-sort-array-of-objects
+        for (i = 1; i < arr.length; i++) {
+            var tmp = arr[i],
+                j = i;
+            while (j > 0 && arr[j - 1].totalTime > tmp.totalTime) {
+                arr[j] = arr[j - 1];
+                --j;
+            }
+            arr[j] = tmp;
+        }
+        return arr;
     }
 
     getRandomIntProcessTotalTime() {
@@ -49,11 +58,25 @@ export class Scheduler extends React.Component {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
+    newProcessToListProcesses = () => {
+        let list = this.state.listProcesses;
+        list.push({
+            key: Math.random(),
+            totalTime: this.getRandomIntProcessTotalTime(),
+            processId: "NP"+(Math.random()*1000).toFixed(0),
+            deadLine: 0
+        })
+        this.setState({
+            listProcesses: list
+        })
+    }
+
     render() {
         return (
             <ScrollView style={styles.mom}>
                 {/* <Text style={{ paddingTop: 20 }}>Cores: {state.cores}, Processos: {state.processos}, Quantum: {state.quantum}, QuantumHasValue: {state.quantumHasValue ? "true" : "false"}</Text> */}
                 <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text>
+
                 <View style={{ flexDirection: 'row' }}>
                     <View>
                         <Processes listProcesses={this.state.listProcesses} />
@@ -63,6 +86,7 @@ export class Scheduler extends React.Component {
                     </View>
                 </View>
 
+                <Button style={styles.newProcessButon} title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses}/>
             </ScrollView>
         )
     }
@@ -72,5 +96,9 @@ export class Scheduler extends React.Component {
 const styles = StyleSheet.create({
     mom: {
         backgroundColor: '#800080'
+    },
+    newProcessButon:{
+        marginBottom: 30,
+        width: "30%"
     }
 });
