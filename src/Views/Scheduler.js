@@ -31,7 +31,7 @@ export class Scheduler extends React.Component {
                 key: { i },
                 totalTime: this.getRandomIntProcessTotalTime(),
                 processId: "p" + i,
-                deadLine: 0
+                deadLine: 0,
             })
         }
         this.setState({
@@ -63,11 +63,14 @@ export class Scheduler extends React.Component {
         list.push({
             key: Math.random(),
             totalTime: this.getRandomIntProcessTotalTime(),
-            processId: "NP"+(Math.random()*1000).toFixed(0),
+            processId: "NP" + (Math.random() * 1000).toFixed(0),
             deadLine: 0
         })
+        let lastProcessInsertedId = list[list.length-1].processId;
         this.setState({
-            listProcesses: list
+            listProcesses: this.insertionSort(list),
+            processos: list.length,
+            lastProcessInsertedId
         })
     }
 
@@ -76,6 +79,11 @@ export class Scheduler extends React.Component {
             <ScrollView style={styles.mom}>
                 {/* <Text style={{ paddingTop: 20 }}>Cores: {state.cores}, Processos: {state.processos}, Quantum: {state.quantum}, QuantumHasValue: {state.quantumHasValue ? "true" : "false"}</Text> */}
                 <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text>
+                
+                <View style={styles.newProcessButtonView}>
+                    <Button title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses} />
+                    <Text>Ultimo Processo: {this.state.lastProcessInsertedId}</Text>
+                </View>
 
                 <View style={{ flexDirection: 'row' }}>
                     <View>
@@ -86,7 +94,7 @@ export class Scheduler extends React.Component {
                     </View>
                 </View>
 
-                <Button style={styles.newProcessButon} title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses}/>
+
             </ScrollView>
         )
     }
@@ -97,8 +105,10 @@ const styles = StyleSheet.create({
     mom: {
         backgroundColor: '#800080'
     },
-    newProcessButon:{
-        marginBottom: 30,
-        width: "30%"
+    newProcessButtonView: {
+        marginTop: 10,
+        height: 30,
+        alignItems: 'center',
+        flexDirection: 'column'
     }
 });
