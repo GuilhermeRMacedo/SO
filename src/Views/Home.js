@@ -4,7 +4,7 @@ import { StackNavigator } from 'react-navigation'
 
 import Header from '../Components/Header'
 import Inputs from '../Components/Inputs'
-import {Buttons} from '../Components/Buttons'
+import { Buttons } from '../Components/Buttons'
 import Processes from '../Components/Processes'
 import Cores from '../Components/Cores'
 
@@ -17,8 +17,7 @@ export class Home extends React.Component {
         cores: '',
         processos: '',
         quantum: '',
-        quantumHasValue: false,
-        screenHomeIsOpen: false
+        quantumHasValue: false
     }
 
     placeCoresChangedHandler = (input) => {

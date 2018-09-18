@@ -7,12 +7,12 @@ const cores = (props) => (
     <View style={styles.cores}>
         <Text style={{ fontSize: 12, color: '#fff' }}>Cores</Text>
         <Core
-            totalTime={0}
-            processId="p4"
+            totalTime=""
+            processId=""
         />
         <Core
-            totalTime={0}
-            processId="p4"
+            totalTime=""
+            processId=""
         />
         
     </View>

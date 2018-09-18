@@ -3,37 +3,26 @@ import { View, Text, StyleSheet } from 'react-native'
 
 import Process from './Process'
 
-const processes = (props) => (
-    <View style={styles.processos}>
-        <Text style={{ fontSize: 12, color: '#fff' }}>Fila de aptos</Text>
-        <Process
-            totalTime={8}
-            processId='p1'
-            deadLine={2}
-        />
-        <Process
-            totalTime={2}
-            processId='p2'
-            deadLine={3}
-        />
-        <Process
-            totalTime={2}
-            processId='p2'
-            deadLine={3}
-        />
-        <Process
-            totalTime={2}
-            processId='p2'
-            deadLine={3}
-        />
-        <Process
-            totalTime={2}
-            processId='p7'
-            deadLine={3}
-        />
-        
-    </View>
-)
+export class Processes extends React.Component {
+    render() {
+        return (
+            <View style={styles.processos}>
+                <Text style={{ fontSize: 12, color: '#fff' }}>Fila de aptos</Text>
+
+                {this.props.listProcesses.map(i => {
+                    return <Process
+                    key = {Math.random()}
+                    totalTime={i.totalTime}
+                    processId={i.processId}
+                    deadLine={i.deadLine}
+                />
+                })}
+                
+
+            </View>
+        )
+    }
+}
 
 const styles = StyleSheet.create({
     processos: {
@@ -43,8 +32,7 @@ const styles = StyleSheet.create({
         width: 78,
         marginLeft: 30,
         marginTop: 40,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 20
     }
 })
-
-export default processes;

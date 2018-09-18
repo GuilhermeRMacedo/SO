@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     tempoTotal: {
-        marginLeft: 55
+        marginLeft: 50
     },
     deadLine: {
         marginLeft: 30,
