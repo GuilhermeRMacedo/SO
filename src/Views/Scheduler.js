@@ -95,10 +95,8 @@ export class Scheduler extends React.Component {
 
     SJF = () => {
         setInterval(() => {
-            console.log("oi");
-            //console.log(this.state.cores);
-            //console.log(this.state.listProcesses[1].processId);
-
+            console.log("se passou 1 segundo");
+            
 
             listProcesses = [];
             for (let i = 0; i < this.state.listProcesses.length; i++) {
@@ -112,26 +110,51 @@ export class Scheduler extends React.Component {
                 //console.log(listProcess.length);
             }
 
-            listProcesses.shift();
+            // console.log(listProcesses[0].processId);
+            // console.log(listProcesses[1].processId);
+
+            // listProcesses.shift();
 
             // console.log(listCores.length);
             // console.log(listProcesses.length);
 
             //do something!!!
-            // for (let i = 0; i < listCores.length; i++) {
-            //     if (listCores[i].isWorking === false) {
-            //         if (listProcesses[i] !== 0) {
-            //             listCores[i] = listProcesses[i];
-            //             listProcesses.shift();
-            //             listCores[i].isWorking = true;
-            //             console.log("to aquiiii");
-            //         }
-            //     }
-            // }
+            for (let i = 0; i < listCores.length; i++) {
+                if (listCores[i].isWorking === false) {
+                    console.log(typeof (listProcesses[i]));
+                    // console.log(listProcesses[0].processId);
+                    if (listProcesses[0] !== undefined) {
+                        console.log("entrei1");
+                        listCores[i] = listProcesses.shift();
+                        listCores[i].isWorking = true;
+                    } else {
+                        console.log("entrei2");
+                    }
+                }
+            }
 
+            // console.log(listCores.length);
+
+            for (let i = 0; i < listCores.length; i++) {
+                listCores[i].totalTime--;
+                if (listCores[i].totalTime === 0) {
+                    listCores[i] = {
+                        totalTime: "",
+                        processId: "",
+                        isWorking: false
+                    }
+                }
+                if(listCores[i].isWorking === false){
+                    listCores[i] = {
+                        totalTime: "",
+                        processId: "",
+                        isWorking: false
+                    }
+                }
+            }
 
             this.setState({
-                listProcess: listProcesses,
+                listProcesses: listProcesses,
                 listCores: listCores
             })
         }, 1000)
@@ -158,7 +181,6 @@ export class Scheduler extends React.Component {
                         <Cores listCores={this.state.listCores} />
                     </View>
                 </View>
-
 
             </ScrollView>
         )
