@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         marginBottom: 2
     },
     tempoADecrementar: {
-        marginLeft: 55
+        marginLeft: 50
     },
     idprocesso: {
         alignItems: 'center',

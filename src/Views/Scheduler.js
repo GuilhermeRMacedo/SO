@@ -6,6 +6,7 @@ import Inputs from '../Components/Inputs'
 import Buttons from '../Components/Buttons'
 import { Processes } from '../Components/Processes'
 import { Cores } from '../Components/Cores'
+import { isNull } from 'util';
 
 export class Scheduler extends React.Component {
     static navigationOptions = {
@@ -82,26 +83,55 @@ export class Scheduler extends React.Component {
             listCores.push({
                 key: { i },
                 totalTime: "",
-                processId: ""
+                processId: "",
+                isWorking: false
             })
         }
         this.setState({
-            listCores: listCores
+            listCores: listCores,
+            cores: listCores.length
         })
     }
 
     SJF = () => {
         setInterval(() => {
             console.log("oi");
-            listProcess = this.state.listProcess;
-            listCores = this.state.listProcess;
+            //console.log(this.state.cores);
+            //console.log(this.state.listProcesses[1].processId);
 
-            
-            //do something
+
+            listProcesses = [];
+            for (let i = 0; i < this.state.listProcesses.length; i++) {
+                listProcesses[i] = this.state.listProcesses[i];
+                //console.log(listProcess.length);
+            }
+
+            listCores = [];
+            for (let i = 0; i < this.state.listCores.length; i++) {
+                listCores[i] = this.state.listCores[i];
+                //console.log(listProcess.length);
+            }
+
+            listProcesses.shift();
+
+            // console.log(listCores.length);
+            // console.log(listProcesses.length);
+
+            //do something!!!
+            // for (let i = 0; i < listCores.length; i++) {
+            //     if (listCores[i].isWorking === false) {
+            //         if (listProcesses[i] !== 0) {
+            //             listCores[i] = listProcesses[i];
+            //             listProcesses.shift();
+            //             listCores[i].isWorking = true;
+            //             console.log("to aquiiii");
+            //         }
+            //     }
+            // }
 
 
             this.setState({
-                listProcess: listProcess,
+                listProcess: listProcesses,
                 listCores: listCores
             })
         }, 1000)
