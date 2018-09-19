@@ -5,7 +5,7 @@ import Header from '../Components/Header'
 import Inputs from '../Components/Inputs'
 import Buttons from '../Components/Buttons'
 import { Processes } from '../Components/Processes'
-import Cores from '../Components/Cores'
+import { Cores } from '../Components/Cores'
 
 export class Scheduler extends React.Component {
     static navigationOptions = {
@@ -22,6 +22,8 @@ export class Scheduler extends React.Component {
 
     componentWillMount() {
         this.generateListProcessesSJF(this.state.processos);
+        this.generateListCores(this.state.cores);
+        this.SJF();
     }
 
     generateListProcessesSJF = (nProcesses) => {
@@ -53,7 +55,7 @@ export class Scheduler extends React.Component {
     }
 
     getRandomIntProcessTotalTime() {
-        min = Math.ceil(1);
+        min = Math.ceil(4);
         max = Math.floor(21);
         return Math.floor(Math.random() * (max - min)) + min;
     }
@@ -66,7 +68,7 @@ export class Scheduler extends React.Component {
             processId: "NP" + (Math.random() * 1000).toFixed(0),
             deadLine: 0
         })
-        let lastProcessInsertedId = list[list.length-1].processId;
+        let lastProcessInsertedId = list[list.length - 1].processId;
         this.setState({
             listProcesses: this.insertionSort(list),
             processos: list.length,
@@ -74,12 +76,45 @@ export class Scheduler extends React.Component {
         })
     }
 
+    generateListCores = (nCores) => {
+        listCores = []
+        for (let i = 0; i < nCores; i++) {
+            listCores.push({
+                key: { i },
+                totalTime: "",
+                processId: ""
+            })
+        }
+        this.setState({
+            listCores: listCores
+        })
+    }
+
+    SJF = () => {
+        setInterval(() => {
+            console.log("oi");
+            listProcess = this.state.listProcess;
+            listCores = this.state.listProcess;
+
+            
+            //do something
+
+
+            this.setState({
+                listProcess: listProcess,
+                listCores: listCores
+            })
+        }, 1000)
+    }
+
+
+
     render() {
         return (
             <ScrollView style={styles.mom}>
                 {/* <Text style={{ paddingTop: 20 }}>Cores: {state.cores}, Processos: {state.processos}, Quantum: {state.quantum}, QuantumHasValue: {state.quantumHasValue ? "true" : "false"}</Text> */}
                 <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text>
-                
+
                 <View style={styles.newProcessButtonView}>
                     <Button title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses} />
                     <Text>Ultimo Processo: {this.state.lastProcessInsertedId}</Text>
@@ -90,7 +125,7 @@ export class Scheduler extends React.Component {
                         <Processes listProcesses={this.state.listProcesses} />
                     </View>
                     <View style={{ marginLeft: 110 }}>
-                        <Cores />
+                        <Cores listCores={this.state.listCores} />
                     </View>
                 </View>
 

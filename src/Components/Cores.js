@@ -3,20 +3,48 @@ import { View, Text, StyleSheet } from 'react-native'
 
 import Core from './Core'
 
-const cores = (props) => (
-    <View style={styles.cores}>
-        <Text style={{ fontSize: 12, color: '#fff' }}>Cores</Text>
-        <Core
-            totalTime=""
-            processId=""
-        />
-        <Core
-            totalTime=""
-            processId=""
-        />
-        
-    </View>
-)
+export class Cores extends React.Component {
+
+    render() {
+
+        // let cores = [];
+        // for (let i = 0; i < this.props.nCores; i++) {
+        //     cores.push(<Core
+        //         key = {i}
+        //         totalTime=""
+        //         processId=""
+        //     />)
+        // }
+
+        return (
+            <View style={styles.cores}>
+                <Text style={{ fontSize: 12, color: '#fff' }}>Cores</Text>
+                {/* <Core
+                    totalTime=""
+                    processId=""
+                />
+                <Core
+                    totalTime=""
+                    processId=""
+                /> */}
+
+                {/* {cores} */}
+
+                {this.props.listCores.map(i => {
+                    return <Core
+                        key = {Math.random()}
+                        totalTime={i.totalTime}
+                        processId={i.processId}
+                    />
+                })}
+
+
+            </View>
+        )
+    }
+}
+
+
 
 const styles = StyleSheet.create({
     cores: {
@@ -30,4 +58,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default cores;
+// export default cores;
