@@ -138,8 +138,17 @@ export class RoundRobin extends React.Component {
                     timeProcessed = 0;
                 }
 
-                fulltime = listCores[i].fulltime - quantum;
+                fulltime = listCores[i].fulltime;
+                fulltime = fulltime - quantum;
+                //console.log(listCores[i].fulltime - quantum);
                 console.log(fulltime);
+                console.log(quantum);
+
+                // 7 - 5 está dando NaN, 2 - 5 não WTF.
+
+                if(isNaN(fulltime)){ 
+                    fulltime = 0;
+                }
 
                 if (timeProcessed == quantum) {
                     timeProcessed = 0;
