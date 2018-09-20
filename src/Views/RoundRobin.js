@@ -86,7 +86,8 @@ export class RoundRobin extends React.Component {
     scheduler = () => {
         setInterval(() => {
             console.log("se passou 1 segundo");
-
+            fulltime = listCores[0].fulltime;
+            console.log("teste - " + fulltime);
             quantum = this.state.quantum;
             listProcesses = [];
             for (let i = 0; i < this.state.listProcesses.length; i++) {
@@ -129,7 +130,6 @@ export class RoundRobin extends React.Component {
 
             for (let i = 0; i < listCores.length; i++) {
                 timeProcessed = this.state.listCores[i].timeProcessed;
-                //console.log(timeProcessed);
                 if (listCores[i].isWorking === true) {
                     timeProcessed++;
                 }
@@ -138,23 +138,23 @@ export class RoundRobin extends React.Component {
                     timeProcessed = 0;
                 }
 
+                console.log(listCores[i].processId);
                 fulltime = listCores[i].fulltime;
+                console.log("fulltime: " + fulltime);
                 fulltime = fulltime - quantum;
-                //console.log(listCores[i].fulltime - quantum);
-                console.log(fulltime);
-                console.log(quantum);
+                console.log("quantum: " + quantum);
+                console.log("fulltime-quantum: " + fulltime);
 
-                // 7 - 5 está dando NaN, 2 - 5 não WTF.
-
-                if(isNaN(fulltime)){ 
+                if (isNaN(fulltime)) {
                     fulltime = 0;
                 }
 
-                if (timeProcessed == quantum) {
+                if (timeProcessed >= quantum) {
                     timeProcessed = 0;
                     listProcesses.push({
                         key: Math.random(),
                         totalTime: fulltime,
+                        fulltime: fulltime,
                         processId: listCores[i].processId,
                         deadLine: 0
                     });
@@ -167,6 +167,8 @@ export class RoundRobin extends React.Component {
                         fulltime: 0
                     }
                 }
+
+                console.log("tempo atual do core: " + listCores[i].totalTime);
 
                 listCores[i].timeProcessed = timeProcessed;
             }
