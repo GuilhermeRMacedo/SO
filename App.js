@@ -3,6 +3,7 @@ import { StackNavigator } from 'react-navigation'
 
 import { Home } from './src/Views/Home';
 import { Scheduler } from './src/Views/Scheduler'
+import { RoundRobin } from './src/Views/RoundRobin'
 
 const MyRoutes = StackNavigator({
   HomeRT: {
@@ -11,6 +12,9 @@ const MyRoutes = StackNavigator({
   SchedulerRT: {
     screen: Scheduler
   },
+  RoundRobinRT: {
+    screen: RoundRobin
+  }
 },
   {
     initialRouteName: 'HomeRT'

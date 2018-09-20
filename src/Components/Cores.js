@@ -4,31 +4,11 @@ import { View, Text, StyleSheet } from 'react-native'
 import Core from './Core'
 
 export class Cores extends React.Component {
-
     render() {
-
-        // let cores = [];
-        // for (let i = 0; i < this.props.nCores; i++) {
-        //     cores.push(<Core
-        //         key = {i}
-        //         totalTime=""
-        //         processId=""
-        //     />)
-        // }
-
         return (
             <View style={styles.cores}>
                 <Text style={{ fontSize: 12, color: '#fff' }}>Cores</Text>
-                {/* <Core
-                    totalTime=""
-                    processId=""
-                />
-                <Core
-                    totalTime=""
-                    processId=""
-                /> */}
-
-                {/* {cores} */}
+                <Text style={{ fontSize: 10, color: '#fff' }}>Quantum: {this.props.quantum}s</Text>
 
                 {this.props.listCores.map(i => {
                     return <Core
@@ -37,8 +17,6 @@ export class Cores extends React.Component {
                         processId={i.processId}
                     />
                 })}
-
-
             </View>
         )
     }

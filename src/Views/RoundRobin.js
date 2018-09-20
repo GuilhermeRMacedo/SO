@@ -7,7 +7,7 @@ import Buttons from '../Components/Buttons'
 import { Processes } from '../Components/Processes'
 import { Cores } from '../Components/Cores'
 
-export class Scheduler extends React.Component {
+export class RoundRobin extends React.Component {
     static navigationOptions = {
         header: null
     };
@@ -28,30 +28,20 @@ export class Scheduler extends React.Component {
     generateListProcessesSJF = (nProcesses) => {
         let listProcesses = []
         for (let i = 0; i < nProcesses; i++) {
+            const totalTime = this.getRandomIntProcessTotalTime();
             listProcesses.push({
                 key: { i },
-                totalTime: this.getRandomIntProcessTotalTime(),
+                totalTime: totalTime,
+                fulltime: totalTime,
                 processId: "p" + i,
-                deadLine: 0,
+                deadLine: 0
             })
         }
         this.setState({
-            listProcesses: this.insertionSort(listProcesses)
+            listProcesses: listProcesses
         })
     }
 
-    insertionSort = (arr) => {  //https://stackoverflow.com/questions/14320101/insert-sort-array-of-objects
-        for (i = 1; i < arr.length; i++) {
-            var tmp = arr[i],
-                j = i;
-            while (j > 0 && arr[j - 1].totalTime > tmp.totalTime) {
-                arr[j] = arr[j - 1];
-                --j;
-            }
-            arr[j] = tmp;
-        }
-        return arr;
-    }
 
     getRandomIntProcessTotalTime() {
         min = Math.ceil(4);
@@ -76,13 +66,15 @@ export class Scheduler extends React.Component {
     }
 
     generateListCores = (nCores) => {
-        listCores = []
+        listCores = [];
         for (let i = 0; i < nCores; i++) {
             listCores.push({
                 key: { i },
-                totalTime: "",
+                totalTime: 0,
                 processId: "",
-                isWorking: false
+                isWorking: false,
+                timeProcessed: 0,
+                fulltime: 0,
             })
         }
         this.setState({
@@ -95,11 +87,10 @@ export class Scheduler extends React.Component {
         setInterval(() => {
             console.log("se passou 1 segundo");
 
-
+            quantum = this.state.quantum;
             listProcesses = [];
             for (let i = 0; i < this.state.listProcesses.length; i++) {
                 listProcesses[i] = this.state.listProcesses[i];
-
             }
 
             listCores = [];
@@ -107,7 +98,6 @@ export class Scheduler extends React.Component {
                 listCores[i] = this.state.listCores[i];
 
             }
-
 
             for (let i = 0; i < listCores.length; i++) {
                 if (listCores[i].isWorking === false) {
@@ -118,24 +108,58 @@ export class Scheduler extends React.Component {
                 }
             }
 
-
-
             for (let i = 0; i < listCores.length; i++) {
                 listCores[i].totalTime--;
+
                 if (listCores[i].totalTime === 0) {
                     listCores[i] = {
-                        totalTime: "",
+                        totalTime: 0,
                         processId: "",
                         isWorking: false
                     }
                 }
                 if (listCores[i].isWorking === false) {
                     listCores[i] = {
-                        totalTime: "",
+                        totalTime: 0,
                         processId: "",
                         isWorking: false
                     }
                 }
+            }
+
+            for (let i = 0; i < listCores.length; i++) {
+                timeProcessed = this.state.listCores[i].timeProcessed;
+                //console.log(timeProcessed);
+                if (listCores[i].isWorking === true) {
+                    timeProcessed++;
+                }
+
+                if (listCores[i].isWorking === false) {
+                    timeProcessed = 0;
+                }
+
+                fulltime = listCores[i].fulltime - quantum;
+                console.log(fulltime);
+
+                if (timeProcessed == quantum) {
+                    timeProcessed = 0;
+                    listProcesses.push({
+                        key: Math.random(),
+                        totalTime: fulltime,
+                        processId: listCores[i].processId,
+                        deadLine: 0
+                    });
+                    listCores[i] = {
+                        key: { i },
+                        totalTime: 0,
+                        processId: "",
+                        isWorking: false,
+                        timeProcessed: 0,
+                        fulltime: 0
+                    }
+                }
+
+                listCores[i].timeProcessed = timeProcessed;
             }
 
             this.setState({
@@ -152,9 +176,9 @@ export class Scheduler extends React.Component {
             <ScrollView style={styles.mom}>
                 {/* <Text style={{ paddingTop: 20 }}>Cores: {state.cores}, Processos: {state.processos}, Quantum: {state.quantum}, QuantumHasValue: {state.quantumHasValue ? "true" : "false"}</Text> */}
                 <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text>
-
+                <Text>round robin</Text>
                 <View style={styles.newProcessButtonView}>
-                    <Button title="Iniciar" color='#660066' onPress={this.scheduler}/>
+                    <Button title="Iniciar" color='#660066' onPress={this.scheduler} />
                     <Button title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses} />
                     <Text>Ultimo Processo: {this.state.lastProcessInsertedId}</Text>
                 </View>
@@ -164,7 +188,7 @@ export class Scheduler extends React.Component {
                         <Processes listProcesses={this.state.listProcesses} />
                     </View>
                     <View style={{ marginLeft: 110 }}>
-                        <Cores listCores={this.state.listCores} />
+                        <Cores listCores={this.state.listCores} quantum={this.state.quantum} />
                     </View>
                 </View>
 

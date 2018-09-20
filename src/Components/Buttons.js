@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native'
+import { View, Text, StyleSheet, Button, TextInput, Alert } from 'react-native'
 
 export class Buttons extends React.Component {
     render() {
@@ -9,7 +9,7 @@ export class Buttons extends React.Component {
                     <Button title="Shortest Job First" color='#660066' disabled={this.props.quantumHasValue} onPress={()=>this.props.navigate('SchedulerRT', {state: this.props.state})} />
                 </View>
                 <View style={styles.roundRobin}>
-                    <Button title="Round Robin" color='#660066' />
+                    <Button title="Round Robin" color='#660066' onPress={()=>this.props.navigate('RoundRobinRT', {state: this.props.state})}/>
                     <TextInput
                         placeholder="Quantum"
                         keyboardType='numeric'
@@ -17,7 +17,7 @@ export class Buttons extends React.Component {
                         onChangeText={this.props.placeQuantumChangedHandler} />
                 </View>
                 <View style={styles.buttons}>
-                    <Button title="Least Time to Go" color='#660066' disabled={this.props.quantumHasValue} />
+                    <Button title="Least Time to Go" color='#660066' disabled={this.props.quantumHasValue} onPress={() => {Alert.alert("Least Time To Go")}} />
                 </View>
             </View>
         )
