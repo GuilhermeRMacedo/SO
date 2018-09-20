@@ -57,7 +57,7 @@ export class Home extends React.Component {
         return (
             <View style={styles.mom}>
 
-                <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text>
+                {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text> */}
                 <Header />
                 <Inputs
                     placeCoresChangedHandler={this.placeCoresChangedHandler}

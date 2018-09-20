@@ -150,8 +150,7 @@ export class Scheduler extends React.Component {
     render() {
         return (
             <ScrollView style={styles.mom}>
-                {/* <Text style={{ paddingTop: 20 }}>Cores: {state.cores}, Processos: {state.processos}, Quantum: {state.quantum}, QuantumHasValue: {state.quantumHasValue ? "true" : "false"}</Text> */}
-                <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text>
+                {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text> */}
 
                 <View style={styles.newProcessButtonView}>
                     <Button title="Iniciar" color='#660066' onPress={this.scheduler}/>
@@ -179,6 +178,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#800080'
     },
     newProcessButtonView: {
+        paddingTop: 20,
         marginTop: 10,
         height: 30,
         alignItems: 'center',

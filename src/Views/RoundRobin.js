@@ -51,15 +51,17 @@ export class RoundRobin extends React.Component {
 
     newProcessToListProcesses = () => {
         let list = this.state.listProcesses;
+        const totalTime = this.getRandomIntProcessTotalTime();
         list.push({
             key: Math.random(),
-            totalTime: this.getRandomIntProcessTotalTime(),
+            totalTime: totalTime,
+            fulltime: totalTime,
             processId: "NP" + (Math.random() * 1000).toFixed(0),
             deadLine: 0
         })
         let lastProcessInsertedId = list[list.length - 1].processId;
         this.setState({
-            listProcesses: this.insertionSort(list),
+            listProcesses: list,
             processos: list.length,
             lastProcessInsertedId
         })
@@ -185,9 +187,8 @@ export class RoundRobin extends React.Component {
     render() {
         return (
             <ScrollView style={styles.mom}>
-                {/* <Text style={{ paddingTop: 20 }}>Cores: {state.cores}, Processos: {state.processos}, Quantum: {state.quantum}, QuantumHasValue: {state.quantumHasValue ? "true" : "false"}</Text> */}
-                <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text>
-                <Text>round robin</Text>
+                {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text> */}
+
                 <View style={styles.newProcessButtonView}>
                     <Button title="Iniciar" color='#660066' onPress={this.scheduler} />
                     <Button title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses} />
@@ -214,10 +215,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#800080'
     },
     newProcessButtonView: {
+        paddingTop: 20,
         marginTop: 10,
         height: 30,
         alignItems: 'center',
         flexDirection: 'column',
-        marginBottom: 20
+        marginBottom: 20,
+        paddingTop: 20
     }
 });
