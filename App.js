@@ -1,9 +1,10 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator } from 'react-navigation';
 
 import { Home } from './src/Views/Home';
-import { Scheduler } from './src/Views/Scheduler'
-import { RoundRobin } from './src/Views/RoundRobin'
+import { Scheduler } from './src/Views/Scheduler';
+import { RoundRobin } from './src/Views/RoundRobin';
+import { LeastTimetoGo } from './src/Views/LeastTimetoGo';
 
 const MyRoutes = StackNavigator({
   HomeRT: {
@@ -14,6 +15,9 @@ const MyRoutes = StackNavigator({
   },
   RoundRobinRT: {
     screen: RoundRobin
+  },
+  LeastTimetoGoRT: {
+    screen: LeastTimetoGo
   }
 },
   {

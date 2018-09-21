@@ -7,7 +7,7 @@ import Buttons from '../Components/Buttons'
 import { Processes } from '../Components/Processes'
 import { Cores } from '../Components/Cores'
 
-export class Scheduler extends React.Component {
+export class LeastTimetoGo extends React.Component {
     static navigationOptions = {
         header: null
     };
@@ -32,7 +32,7 @@ export class Scheduler extends React.Component {
                 key: { i },
                 totalTime: this.getRandomIntProcessTotalTime(),
                 processId: "p" + i,
-                deadLine: 0,
+                deadLine: this.getRandomIntProcessDeadLine(),
             })
         }
         this.setState({
@@ -44,7 +44,7 @@ export class Scheduler extends React.Component {
         for (i = 1; i < arr.length; i++) {
             var tmp = arr[i],
                 j = i;
-            while (j > 0 && arr[j - 1].totalTime > tmp.totalTime) {
+            while (j > 0 && arr[j - 1].deadLine > tmp.deadLine) {
                 arr[j] = arr[j - 1];
                 --j;
             }
@@ -59,13 +59,19 @@ export class Scheduler extends React.Component {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
+    getRandomIntProcessDeadLine() {
+        min = Math.ceil(4);
+        max = Math.floor(21);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
     newProcessToListProcesses = () => {
         let list = this.state.listProcesses;
         list.push({
             key: Math.random(),
             totalTime: this.getRandomIntProcessTotalTime(),
             processId: "NP" + (Math.random() * 1000).toFixed(0),
-            deadLine: 0
+            deadLine: this.getRandomIntProcessDeadLine()
         })
         let lastProcessInsertedId = list[list.length - 1].processId;
         this.setState({
@@ -151,7 +157,7 @@ export class Scheduler extends React.Component {
         return (
             <ScrollView style={styles.mom}>
                 {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text> */}
-
+                <Text style={{paddingTop: 20}}>LTG</Text>
                 <View style={styles.newProcessButtonView}>
                     <Button title="Iniciar" color='#660066' onPress={this.scheduler}/>
                     <Button title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses} />

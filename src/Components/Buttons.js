@@ -17,7 +17,7 @@ export class Buttons extends React.Component {
                         onChangeText={this.props.placeQuantumChangedHandler} />
                 </View>
                 <View style={styles.buttons}>
-                    <Button title="Least Time to Go" color='#660066' disabled={this.props.quantumHasValue} onPress={() => {Alert.alert("Least Time To Go")}} />
+                    <Button title="Least Time to Go" color='#660066' disabled={this.props.quantumHasValue} onPress={()=>this.props.navigate('LeastTimetoGoRT', {state: this.props.state})} />
                 </View>
             </View>
         )
