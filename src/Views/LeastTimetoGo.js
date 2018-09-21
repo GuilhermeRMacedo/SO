@@ -105,7 +105,6 @@ export class LeastTimetoGo extends React.Component {
             listProcesses = [];
             for (let i = 0; i < this.state.listProcesses.length; i++) {
                 listProcesses[i] = this.state.listProcesses[i];
-
             }
 
             listCores = [];
@@ -113,7 +112,6 @@ export class LeastTimetoGo extends React.Component {
                 listCores[i] = this.state.listCores[i];
 
             }
-            
 
             for (let i = 0; i < listCores.length; i++) {
                 if (listCores[i].isWorking === false) {
@@ -124,7 +122,12 @@ export class LeastTimetoGo extends React.Component {
                 }
             }
 
-
+            for(let i = 0; i<listProcesses.length; i++){
+                listProcesses[i].deadLine--;
+                if(listProcesses[i].deadLine <= 0){
+                    listProcesses.splice(listProcesses[i],1);
+                }
+            }
 
             for (let i = 0; i < listCores.length; i++) {
                 listCores[i].totalTime--;
