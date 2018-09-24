@@ -107,7 +107,7 @@ export class Scheduler extends React.Component {
                 listCores[i] = this.state.listCores[i];
 
             }
-            
+
 
             for (let i = 0; i < listCores.length; i++) {
                 if (listCores[i].isWorking === false) {
@@ -153,12 +153,16 @@ export class Scheduler extends React.Component {
                 {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text> */}
 
                 <View style={styles.newProcessButtonView}>
-                    <Button title="Iniciar" color='#660066' onPress={this.scheduler}/>
-                    <Button title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses} />
-                    <Text>Ultimo Processo: {this.state.lastProcessInsertedId}</Text>
+                    <View style={styles.buttons}>
+                        <Button title="Iniciar" color='#660066' onPress={this.scheduler} />
+                    </View>
+                    <View style={styles.buttons}>
+                        <Button title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses} />
+                    </View>
+                    <Text style={{color: '#fff'}} >Ultimo Processo: {this.state.lastProcessInsertedId}</Text>
                 </View>
 
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', marginTop: 40 }}>
                     <View>
                         <Processes listProcesses={this.state.listProcesses} />
                     </View>
@@ -184,5 +188,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         marginBottom: 20
+    },buttons: {
+        marginBottom: 5
     }
 });

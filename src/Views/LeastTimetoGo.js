@@ -6,6 +6,7 @@ import Inputs from '../Components/Inputs'
 import Buttons from '../Components/Buttons'
 import { Processes } from '../Components/Processes'
 import { Cores } from '../Components/Cores'
+import { AbortedProcesses } from '../Components/AbortedProcesses'
 
 export class LeastTimetoGo extends React.Component {
     static navigationOptions = {
@@ -98,10 +99,9 @@ export class LeastTimetoGo extends React.Component {
     }
 
     scheduler = () => {
+        abortedProcesses = [];
         setInterval(() => {
             console.log("se passou 1 segundo");
-
-
             listProcesses = [];
             for (let i = 0; i < this.state.listProcesses.length; i++) {
                 listProcesses[i] = this.state.listProcesses[i];
@@ -122,10 +122,12 @@ export class LeastTimetoGo extends React.Component {
                 }
             }
 
-            for(let i = 0; i<listProcesses.length; i++){
+
+            for (let i = 0; i < listProcesses.length; i++) {
                 listProcesses[i].deadLine--;
-                if(listProcesses[i].deadLine <= 0){
-                    listProcesses.splice(listProcesses[i],1);
+                if (listProcesses[i].deadLine <= 0) {
+                    abortedProcesses.push(listProcesses[i]);
+                    listProcesses.splice(listProcesses[i], 1);
                 }
             }
 
@@ -149,7 +151,8 @@ export class LeastTimetoGo extends React.Component {
 
             this.setState({
                 listProcesses: listProcesses,
-                listCores: listCores
+                listCores: listCores,
+                abortedProcesses: abortedProcesses
             })
         }, 1000)
     }
@@ -157,23 +160,33 @@ export class LeastTimetoGo extends React.Component {
 
 
     render() {
+
+
+
         return (
             <ScrollView style={styles.mom}>
                 {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text> */}
-                <Text style={{paddingTop: 20}}>LTG</Text>
                 <View style={styles.newProcessButtonView}>
-                    <Button title="Iniciar" color='#660066' onPress={this.scheduler}/>
-                    <Button title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses} />
-                    <Text>Ultimo Processo: {this.state.lastProcessInsertedId}</Text>
+                    <View style={styles.buttons}>
+                        <Button title="Iniciar" color='#660066' onPress={this.scheduler} />
+                    </View>
+                    <View style={styles.buttons}>
+                        <Button title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses} />
+                    </View>
+                    <Text style={{ color: '#fff' }} >Ultimo Processo: {this.state.lastProcessInsertedId}</Text>
                 </View>
 
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', marginTop: 40 }}>
                     <View>
                         <Processes listProcesses={this.state.listProcesses} />
                     </View>
-                    <View style={{ marginLeft: 110 }}>
+                    <View style={{ marginLeft: 5 }}>
+                        <AbortedProcesses abortedProcesses={this.state.abortedProcesses} />
+                    </View>
+                    <View style={{ marginLeft: 5 }}>
                         <Cores listCores={this.state.listCores} />
                     </View>
+
                 </View>
 
             </ScrollView>
@@ -193,5 +206,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         marginBottom: 20
-    }
+    },
+    buttons: {
+        marginBottom: 5
+    },
 });

@@ -17,7 +17,8 @@ export class Home extends React.Component {
         cores: '',
         processos: '',
         quantum: '',
-        quantumHasValue: false
+        quantumHasValue: false,
+        abortedProcesses: []
     }
 
     placeCoresChangedHandler = (input) => {
