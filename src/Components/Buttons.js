@@ -6,18 +6,19 @@ export class Buttons extends React.Component {
         return (
             <View style={styles.mom}>
                 <View style={styles.buttons}>
-                    <Button title="Shortest Job First" color='#660066' disabled={this.props.quantumHasValue} onPress={()=>this.props.navigate('SchedulerRT', {state: this.props.state})} />
+                    <Button title="Shortest Job First" color='#800080' disabled={this.props.quantumHasValue} onPress={()=>this.props.navigate('SchedulerRT', {state: this.props.state})} />
                 </View>
                 <View style={styles.roundRobin}>
-                    <Button title="Round Robin" color='#660066' onPress={()=>this.props.navigate('RoundRobinRT', {state: this.props.state})}/>
+                    <Button title="Round Robin" color='#800080' onPress={()=>this.props.navigate('RoundRobinRT', {state: this.props.state})}/>
                     <TextInput
                         placeholder="Quantum"
                         keyboardType='numeric'
                         style={styles.placeInput}
-                        onChangeText={this.props.placeQuantumChangedHandler} />
+                        onChangeText={this.props.placeQuantumChangedHandler} 
+                        underlineColorAndroid="#660066" />
                 </View>
                 <View style={styles.buttons}>
-                    <Button title="Least Time to Go" color='#660066' disabled={this.props.quantumHasValue} onPress={()=>this.props.navigate('LeastTimetoGoRT', {state: this.props.state})} />
+                    <Button title="Least Time to Go" color='#800080' disabled={this.props.quantumHasValue} onPress={()=>this.props.navigate('LeastTimetoGoRT', {state: this.props.state})} />
                 </View>
             </View>
         )

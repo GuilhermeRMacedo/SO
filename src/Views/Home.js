@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     mom: {
         flex: 1,
         justifyContent: 'flex-start',
-        backgroundColor: '#800080'
+        backgroundColor: '#660066'
     }
 });
 

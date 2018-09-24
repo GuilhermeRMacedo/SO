@@ -154,10 +154,10 @@ export class Scheduler extends React.Component {
 
                 <View style={styles.newProcessButtonView}>
                     <View style={styles.buttons}>
-                        <Button title="Iniciar" color='#660066' onPress={this.scheduler} />
+                        <Button title="Iniciar" color='#800080' onPress={this.scheduler} />
                     </View>
                     <View style={styles.buttons}>
-                        <Button title="Novo processo aleatório" color='#660066' onPress={this.newProcessToListProcesses} />
+                        <Button title="Novo processo aleatório" color='#800080' onPress={this.newProcessToListProcesses} />
                     </View>
                     <Text style={{color: '#fff'}} >Ultimo Processo: {this.state.lastProcessInsertedId}</Text>
                 </View>
@@ -179,7 +179,7 @@ export class Scheduler extends React.Component {
 
 const styles = StyleSheet.create({
     mom: {
-        backgroundColor: '#800080'
+        backgroundColor: '#660066'
     },
     newProcessButtonView: {
         paddingTop: 20,

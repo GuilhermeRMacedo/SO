@@ -7,14 +7,14 @@ const inputs = (props) => (
             placeholder='Cores'
             style={styles.placeInput}
             keyboardType='numeric'
-            underlineColorAndroid="#800080"
+            underlineColorAndroid="#660066"
             onChangeText={props.placeCoresChangedHandler}
         />
         <TextInput
             placeholder='Processos'
             style={styles.placeInput}
             keyboardType='numeric'
-            underlineColorAndroid="#800080" 
+            underlineColorAndroid="#660066" 
             onChangeText = {props.placeProcessosChangedHandler}
             />
     </View>
