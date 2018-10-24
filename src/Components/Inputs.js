@@ -17,8 +17,14 @@ const inputs = (props) => (
             underlineColorAndroid="#660066" 
             onChangeText = {props.placeProcessosChangedHandler}
             />
+        <TextInput 
+            placeholder='Memória'
+            style={styles.placeInput}
+            keyboardType='numeric'
+            underlineColorAndroid="#660066" 
+            onChangeText = {props.placeMemoriaChangedHandler}
+        />
     </View>
-
 )
 
 const styles = StyleSheet.create({

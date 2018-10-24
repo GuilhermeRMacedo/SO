@@ -16,6 +16,7 @@ export class Home extends React.Component {
     state = {
         cores: '',
         processos: '',
+        memoria: '',
         quantum: '',
         quantumHasValue: false,
         abortedProcesses: []
@@ -30,6 +31,12 @@ export class Home extends React.Component {
     placeProcessosChangedHandler = (input) => {
         this.setState({
             processos: input
+        })
+    }
+
+    placeMemoriaChangedHandler = (input) => {
+        this.setState({
+            memoria: input
         })
     }
 

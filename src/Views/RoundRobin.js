@@ -6,6 +6,7 @@ import Inputs from '../Components/Inputs'
 import Buttons from '../Components/Buttons'
 import { Processes } from '../Components/Processes'
 import { Cores } from '../Components/Cores'
+import { Memory } from '../Components/Memory';
 
 export class RoundRobin extends React.Component {
     static navigationOptions = {
@@ -41,7 +42,6 @@ export class RoundRobin extends React.Component {
             listProcesses: listProcesses
         })
     }
-
 
     getRandomIntProcessTotalTime() {
         min = Math.ceil(4);
@@ -182,12 +182,10 @@ export class RoundRobin extends React.Component {
         }, 1000)
     }
 
-
-
     render() {
         return (
             <ScrollView style={styles.mom}>
-                {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text> */}
+                {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Memoria: {this.state.memoria}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text> */}
 
                 <View style={styles.newProcessButtonView}>
                     <View style={styles.buttons}>
@@ -199,7 +197,11 @@ export class RoundRobin extends React.Component {
                     <Text style={{color: '#fff'}} >Ultimo Processo: {this.state.lastProcessInsertedId}</Text>
                 </View>
 
-                <View style={{ flexDirection: 'row', marginTop: 40 }}>
+                <View style={styles.memory}>
+                    <Memory />
+                </View>
+
+                <View style={{ flexDirection: 'row'}}>
                     <View>
                         <Processes listProcesses={this.state.listProcesses} />
                     </View>
@@ -229,5 +231,9 @@ const styles = StyleSheet.create({
     },
     buttons: {
         marginBottom: 5
+    },
+    memory:{
+        marginTop: 80,
+        
     }
 });

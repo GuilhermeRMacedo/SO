@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native'
 const header = () => (
     <View style={styles.header}>
         <Text style={styles.text}>Sistema Operacional</Text>
-        <Text style={{ color: '#fff' }}>Escalonadores</Text>
+        <Text style={{ color: '#fff' }}>Escalonadores e Memória</Text>
     </View>
 )
 
