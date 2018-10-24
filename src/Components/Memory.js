@@ -5,7 +5,7 @@ export class Memory extends React.Component {
     render(){
         return(
             <View style={styles.memory}>
-                <Text style={{color: '#fff'}}>Memoria</Text>
+                <Text style={{color: '#fff'}}>Memoria: {this.props.memoryFullSize}Kb</Text>
                 <View style={styles.content}>
                     
                 </View>

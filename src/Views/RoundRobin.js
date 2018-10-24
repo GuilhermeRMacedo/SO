@@ -95,6 +95,51 @@ export class RoundRobin extends React.Component {
         })
     }
 
+    newMemoryBlock(process){
+        let memoryBlock = {
+            isWorking: false,
+            id: '',
+            processId: process.processId,
+            totalSize: process.bytesCost,
+            unusedSize: totalSize - process.bytesCost
+        }
+
+        return memoryBlock;
+    }
+
+    bestFit(memoryBlock){
+        let memoryBlockList = [];
+        let memoryFreeSpace = this.state.memoria;
+
+        if(memoryFreeSpace >= memoryBlock.totalSize){
+            memoryBlock.isWorking = true;
+            memoryFreeSpace = memoryFreeSpace - memoryBlock.totalSize;
+            memoryBlockList.push(memoryBlock);
+        }else{
+            let bestIndex = -1;
+            let bestSpace = Math.max();
+            for(let i = 0; i < memoryBlockList.length; i++){
+                if(memoryBlockList[i].isWorking === false){
+                    //save index
+                    let space = memoryBlockList[i].totalSize - memoryBlock.totalSize;
+                    if(space < bestSpace){
+                        bestIndex = i;
+                    }  
+                }
+            }
+
+            if(bestIndex !== -1){
+                
+            }else{
+                //index out of bounds
+            }
+        }
+
+        this.setState({
+            memoryBlockList: this.memoryBlockList
+        })
+    }
+
     scheduler = () => {
         setInterval(() => {
             console.log("se passou 1 segundo");
@@ -191,6 +236,7 @@ export class RoundRobin extends React.Component {
             })
         }, 1000)
     }
+    
 
     render() {
         return (
@@ -208,7 +254,7 @@ export class RoundRobin extends React.Component {
                 </View>
 
                 <View style={styles.memory}>
-                    <Memory />
+                    <Memory memoryFullSize={this.state.memoria}/>
                 </View>
 
                 <View style={{ flexDirection: 'row' }}>

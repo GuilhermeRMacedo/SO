@@ -70,6 +70,7 @@ export class Home extends React.Component {
                 <Inputs
                     placeCoresChangedHandler={this.placeCoresChangedHandler}
                     placeProcessosChangedHandler={this.placeProcessosChangedHandler}
+                    placeMemoriaChangedHandler={this.placeMemoriaChangedHandler}
                 />
                 <Buttons
                     navigate = {navigate}
