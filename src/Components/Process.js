@@ -9,7 +9,12 @@ const process = (props) => (
         <View style={styles.idprocesso}>
             <Text style={{color: '#fff'}}>{props.processId}</Text>
         </View>
-        <Text style={styles.deadLine}>{props.deadLine}</Text>
+
+        {(props.deadLine !== 0) ? 
+        <Text style={styles.deadLine}>{props.deadLine}</Text> 
+        : 
+        <Text></Text>}
+        {/* <Text style={styles.deadLine}>{props.deadLine}</Text> */}
     </View>
 )
 

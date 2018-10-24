@@ -22,20 +22,22 @@ export class RoundRobin extends React.Component {
     state = this.loadState();
 
     componentWillMount() {
-        this.generateListProcessesSJF(this.state.processos);
+        this.generateListProcesses(this.state.processos);
         this.generateListCores(this.state.cores);
     }
 
-    generateListProcessesSJF = (nProcesses) => {
+    generateListProcesses = (nProcesses) => {
         let listProcesses = []
         for (let i = 0; i < nProcesses; i++) {
             const totalTime = this.getRandomIntProcessTotalTime();
+            const bytesCost = this.getRandomIntProcessMemoryCostBytes();
             listProcesses.push({
                 key: { i },
                 totalTime: totalTime,
                 fulltime: totalTime,
                 processId: "p" + i,
-                deadLine: 0
+                deadLine: 0,
+                bytesCost: bytesCost
             })
         }
         this.setState({
@@ -49,15 +51,23 @@ export class RoundRobin extends React.Component {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
+    getRandomIntProcessMemoryCostBytes() {
+        min = Math.ceil(32);
+        max = Math.floor(1025);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
     newProcessToListProcesses = () => {
         let list = this.state.listProcesses;
         const totalTime = this.getRandomIntProcessTotalTime();
+        const bytesCost = this.getRandomIntProcessMemoryCostBytes();
         list.push({
             key: Math.random(),
             totalTime: totalTime,
             fulltime: totalTime,
             processId: "NP" + (Math.random() * 1000).toFixed(0),
-            deadLine: 0
+            deadLine: 0,
+            bytesCost: bytesCost
         })
         let lastProcessInsertedId = list[list.length - 1].processId;
         this.setState({
@@ -194,14 +204,14 @@ export class RoundRobin extends React.Component {
                     <View style={styles.buttons}>
                         <Button title="Novo processo aleatório" color='#800080' onPress={this.newProcessToListProcesses} />
                     </View>
-                    <Text style={{color: '#fff'}} >Ultimo Processo: {this.state.lastProcessInsertedId}</Text>
+                    <Text style={{ color: '#fff' }} >Ultimo Processo: {this.state.lastProcessInsertedId}</Text>
                 </View>
 
                 <View style={styles.memory}>
                     <Memory />
                 </View>
 
-                <View style={{ flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                     <View>
                         <Processes listProcesses={this.state.listProcesses} />
                     </View>
@@ -232,8 +242,8 @@ const styles = StyleSheet.create({
     buttons: {
         marginBottom: 5
     },
-    memory:{
+    memory: {
         marginTop: 80,
-        
+
     }
 });
