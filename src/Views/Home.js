@@ -22,7 +22,8 @@ export class Home extends React.Component {
         quantum: '',
         quantumHasValue: false,
         abortedProcesses: [],
-        memoryBlockList: []
+        memoryBlockList: [],
+        memoriaFreeSpace: ''
     }
 
     placeCoresChangedHandler = (input) => {
@@ -39,7 +40,8 @@ export class Home extends React.Component {
 
     placeMemoriaChangedHandler = (input) => {
         this.setState({
-            memoria: input
+            memoria: input,
+            memoriaFreeSpace: input
         })
     }
 

@@ -14,7 +14,7 @@ export class Memory extends React.Component {
                     {this.props.memoryBlockList.map(i => {
                         return <Block
                             key={Math.random()}
-                            id={'0'}
+                            id={i.id}
                             totalSize={(i.totalSize / this.props.memoryFullSize) * 298}
                         />
                     })}
@@ -31,6 +31,7 @@ export class Memory extends React.Component {
 
 
                 </View>
+                <Text style={{ color: '#fff', marginLeft: 210}}>Livre: {this.props.memoriaFreeSpace}Kb</Text>
             </View>
         )
     }

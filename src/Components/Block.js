@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 
 const block = (props) => (
     <View style={[styles.block, {width: props.totalSize}]}>
-        <Text style={{color: '#fff', textAlign: 'center'}}>b{props.id}</Text>
+        <Text style={{color: '#fff', textAlign: 'center'}}>{props.id}</Text>
     </View>
 )
 
