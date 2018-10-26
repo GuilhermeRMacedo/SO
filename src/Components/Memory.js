@@ -1,13 +1,35 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
+import Block from './Block';
+
 export class Memory extends React.Component {
-    render(){
-        return(
+    render() {
+        return (
             <View style={styles.memory}>
-                <Text style={{color: '#fff'}}>Memoria: {this.props.memoryFullSize}Kb</Text>
+                <Text style={{ color: '#fff' }}>Memoria: {this.props.memoryFullSize}Kb</Text>
                 <View style={styles.content}>
-                    
+
+                    {/* {console.log(this.props.memoryBlockList + " -bug aqui")}  */}
+                    {this.props.memoryBlockList.map(i => {
+                        return <Block
+                            key={Math.random()}
+                            id={'0'}
+                            totalSize={(i.totalSize / this.props.memoryFullSize) * 298}
+                        />
+                    })}
+
+                    {/* <Block
+                        id = {'0'}
+                        totalSize={(20/this.props.memoryFullSize)*298}
+                    />
+                    <Block
+                        id = {'1'}
+                        totalSize={(30/this.props.memoryFullSize)*298}
+                    /> */}
+
+
+
                 </View>
             </View>
         )
@@ -15,14 +37,15 @@ export class Memory extends React.Component {
 }
 
 const styles = StyleSheet.create({
-   memory:{
-       marginLeft: 30,
-       marginRight: 30
-   },
-   content:{
-    borderWidth: 1,
-    borderColor: '#fff',
-    borderRadius: 2,
-    height: 40
-   }
+    memory: {
+        marginLeft: 30,
+        marginRight: 30
+    },
+    content: {
+        borderWidth: 1,
+        borderColor: '#fff',
+        borderRadius: 2,
+        height: 50,
+        flexDirection: 'row'
+    }
 })

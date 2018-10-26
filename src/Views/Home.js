@@ -8,6 +8,8 @@ import { Buttons } from '../Components/Buttons'
 import Processes from '../Components/Processes'
 import Cores from '../Components/Cores'
 
+import Block from '../Components/Block'
+
 export class Home extends React.Component {
     static navigationOptions = {
         header: null
@@ -19,7 +21,8 @@ export class Home extends React.Component {
         memoria: '',
         quantum: '',
         quantumHasValue: false,
-        abortedProcesses: []
+        abortedProcesses: [],
+        memoryBlockList: []
     }
 
     placeCoresChangedHandler = (input) => {
@@ -73,7 +76,7 @@ export class Home extends React.Component {
                     placeMemoriaChangedHandler={this.placeMemoriaChangedHandler}
                 />
                 <Buttons
-                    navigate = {navigate}
+                    navigate={navigate}
                     placeQuantumChangedHandler={this.placeQuantumChangedHandler}
                     quantumHasValue={this.quantumHasValue}
                     state={this.state}

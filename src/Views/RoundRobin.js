@@ -6,7 +6,7 @@ import Inputs from '../Components/Inputs'
 import Buttons from '../Components/Buttons'
 import { Processes } from '../Components/Processes'
 import { Cores } from '../Components/Cores'
-import { Memory } from '../Components/Memory';
+import { Memory } from '../Components/Memory'
 
 export class RoundRobin extends React.Component {
     static navigationOptions = {
@@ -96,32 +96,39 @@ export class RoundRobin extends React.Component {
     }
 
     newMemoryBlock(process){
+
         let memoryBlock = {
             isWorking: false,
-            id: '',
+            id: '0',
             processId: process.processId,
             totalSize: process.bytesCost,
-            unusedSize: totalSize - process.bytesCost
+            unusedSize: this.totalSize - process.bytesCost
         }
 
         return memoryBlock;
     }
 
     bestFit(memoryBlock){
-        let memoryBlockList = [];
+        let BlockList = this.state.memoryBlockList;   
         let memoryFreeSpace = this.state.memoria;
 
         if(memoryFreeSpace >= memoryBlock.totalSize){
-            memoryBlock.isWorking = true;
+            //memoryBlock.isWorking = true;
             memoryFreeSpace = memoryFreeSpace - memoryBlock.totalSize;
-            memoryBlockList.push(memoryBlock);
+            BlockList.push({
+                isWorking: true,
+                id: '0',
+                processId: memoryBlock.processId,
+                totalSize: memoryBlock.totalSize,
+                unusedSize: memoryBlock.unusedSize
+            });
         }else{
             let bestIndex = -1;
             let bestSpace = Math.max();
-            for(let i = 0; i < memoryBlockList.length; i++){
-                if(memoryBlockList[i].isWorking === false){
+            for(let i = 0; i < BlockList.length; i++){
+                if(BlockList[i].isWorking === false){
                     //save index
-                    let space = memoryBlockList[i].totalSize - memoryBlock.totalSize;
+                    let space = BlockList[i].totalSize - memoryBlock.totalSize;
                     if(space < bestSpace){
                         bestIndex = i;
                     }  
@@ -129,14 +136,20 @@ export class RoundRobin extends React.Component {
             }
 
             if(bestIndex !== -1){
-                
+                BlockList[bestIndex].isWorking = true;
+                BlockList[bestIndex].id = '0';
+                BlockList[bestIndex].processId = memoryBlock.processId;
+                BlockList[bestIndex].unusedSize = memoryBlockList[bestIndex].totalSize - memoryBlock.totalSize;
             }else{
-                //index out of bounds
+                //erro
+                console.log("erro");
             }
         }
 
+        console.log(BlockList);
+
         this.setState({
-            memoryBlockList: this.memoryBlockList
+            memoryBlockList: BlockList
         })
     }
 
@@ -144,9 +157,12 @@ export class RoundRobin extends React.Component {
         setInterval(() => {
             console.log("se passou 1 segundo");
             fulltime = listCores[0].fulltime;
-            console.log("teste - " + fulltime);
+            //console.log("teste - " + fulltime);
             quantum = this.state.quantum;
             listProcesses = [];
+
+            let process;
+            let block;
             for (let i = 0; i < this.state.listProcesses.length; i++) {
                 listProcesses[i] = this.state.listProcesses[i];
             }
@@ -160,6 +176,15 @@ export class RoundRobin extends React.Component {
             for (let i = 0; i < listCores.length; i++) {
                 if (listCores[i].isWorking === false) {
                     if (listProcesses[0] !== undefined) {
+                        //memory
+                        process = listProcesses[0];
+                        //console.log(process)   
+                        block = this.newMemoryBlock(process);
+                        //console.log("antes do print do block");
+                        //console.log(block);
+                        //console.log("depois do print do block");
+                        this.bestFit(block);
+
                         listCores[i] = listProcesses.shift();
                         listCores[i].isWorking = true;
                     }
@@ -195,12 +220,12 @@ export class RoundRobin extends React.Component {
                     timeProcessed = 0;
                 }
 
-                console.log(listCores[i].processId);
+                //console.log(listCores[i].processId);
                 fulltime = listCores[i].fulltime;
-                console.log("fulltime: " + fulltime);
+                //console.log("fulltime: " + fulltime);
                 fulltime = fulltime - quantum;
-                console.log("quantum: " + quantum);
-                console.log("fulltime-quantum: " + fulltime);
+                //console.log("quantum: " + quantum);
+                //console.log("fulltime-quantum: " + fulltime);
 
                 if (isNaN(fulltime)) {
                     fulltime = 0;
@@ -225,7 +250,7 @@ export class RoundRobin extends React.Component {
                     }
                 }
 
-                console.log("tempo atual do core: " + listCores[i].totalTime);
+                //console.log("tempo atual do core: " + listCores[i].totalTime);
 
                 listCores[i].timeProcessed = timeProcessed;
             }
@@ -254,12 +279,12 @@ export class RoundRobin extends React.Component {
                 </View>
 
                 <View style={styles.memory}>
-                    <Memory memoryFullSize={this.state.memoria}/>
+                    <Memory memoryFullSize={this.state.memoria} memoryBlockList={this.state.memoryBlockList} />
                 </View>
 
                 <View style={{ flexDirection: 'row' }}>
                     <View>
-                        <Processes listProcesses={this.state.listProcesses} />
+                        <Processes listProcesses={this.state.listProcesses}  memoryBlockList={this.state.memoryBlockList}/>
                     </View>
                     <View style={{ marginLeft: 110 }}>
                         <Cores listCores={this.state.listCores} quantum={this.state.quantum} />
