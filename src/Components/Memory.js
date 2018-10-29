@@ -15,7 +15,12 @@ export class Memory extends React.Component {
                         return <Block
                             key={Math.random()}
                             id={i.id}
-                            totalSize={(i.totalSize / this.props.memoryFullSize) * 298}
+                            totalSizeToScreen={(i.totalSize / this.props.memoryFullSize) * 298}
+                            processId = {i.processId}
+                            isWorking = {i.isWorking}
+                            totalSize = {i.totalSize}
+                            unusedSize = {i.unusedSize}
+                            usedSize = {i.usedSize}
                         />
                     })}
 
@@ -27,7 +32,6 @@ export class Memory extends React.Component {
                         id = {'1'}
                         totalSize={(30/this.props.memoryFullSize)*298}
                     /> */}
-
 
 
                 </View>
@@ -46,7 +50,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#fff',
         borderRadius: 2,
-        height: 50,
+        height: 80,
         flexDirection: 'row'
     }
 })

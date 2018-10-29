@@ -105,13 +105,22 @@ export class RoundRobin extends React.Component {
   };
 
   newMemoryBlock(process) {
+    let BlockList = this.state.memoryBlockList;
+    let id;
+
+    if(BlockList.length === 0){
+      id = 0;
+    }else{
+      id = BlockList[BlockList.length-1].id + 1;
+    }
+
     let memoryBlock = {
       isWorking: false,
-      //id: '0',
-      id: process.processId,
+      id: id,
       processId: process.processId,
       totalSize: process.bytesCost,
-      unusedSize: this.totalSize - process.bytesCost
+      unusedSize: this.totalSize - process.bytesCost,
+      usedSize: process.bytesCost
     };
 
     return memoryBlock;
@@ -120,20 +129,16 @@ export class RoundRobin extends React.Component {
   bestFit(memoryBlock) {
     let BlockList = this.state.memoryBlockList;
     let memoryFreeSpace = this.state.memoriaFreeSpace;
-    console.log("1: ");
-    console.log(memoryFreeSpace);
 
     if (memoryFreeSpace >= memoryBlock.totalSize) {
-      //memoryBlock.isWorking = true;
       memoryFreeSpace = memoryFreeSpace - memoryBlock.totalSize;
-      console.log("2: ");
-      console.log(memoryFreeSpace);
       BlockList.push({
         isWorking: true,
         id: memoryBlock.id,
         processId: memoryBlock.processId,
         totalSize: memoryBlock.totalSize,
-        unusedSize: memoryBlock.unusedSize
+        unusedSize: memoryBlock.unusedSize,
+        usedSize: memoryBlock.usedSize
       });
     } else {
       let bestIndex = -1;
@@ -164,7 +169,7 @@ export class RoundRobin extends React.Component {
 
     this.setState({
       memoryBlockList: BlockList,
-      memoriaFreeSpace: this.memoryFreeSpace
+      //memoriaFreeSpace: this.memoryFreeSpace
     });
   }
 
@@ -175,6 +180,7 @@ export class RoundRobin extends React.Component {
       //console.log("teste - " + fulltime);
       quantum = this.state.quantum;
       listProcesses = [];
+      memoriaFreeSpace = parseInt(this.state.memoriaFreeSpace);
 
       let process;
       let block;
@@ -192,11 +198,10 @@ export class RoundRobin extends React.Component {
           if (listProcesses[0] !== undefined) {
             //memory
             process = listProcesses[0];
-            //console.log(process)
             block = this.newMemoryBlock(process);
-            //console.log("antes do print do block");
-            //console.log(block);
-            //console.log("depois do print do block");
+            if(memoriaFreeSpace - block.totalSize >= 0){
+              memoriaFreeSpace = memoriaFreeSpace - block.totalSize;
+            }
             this.bestFit(block);
 
             listCores[i] = listProcesses.shift();
@@ -271,7 +276,8 @@ export class RoundRobin extends React.Component {
 
       this.setState({
         listProcesses: listProcesses,
-        listCores: listCores
+        listCores: listCores,
+        memoriaFreeSpace: memoriaFreeSpace
       });
     }, 1000);
   };

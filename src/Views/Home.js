@@ -86,6 +86,16 @@ export class Home extends React.Component {
                     onPress={this.onPress}
                 />
 
+                {/* <Block
+                    key={Math.random()}
+                    id={'0'}
+                    totalSizeToScreen={60}
+                    processId={'p0'}
+                    isWorking={''+false}
+                    totalSize={60}
+                    usedSize={20}
+                /> */}
+
             </View>
         )
     }
