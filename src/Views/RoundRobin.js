@@ -108,10 +108,10 @@ export class RoundRobin extends React.Component {
     let BlockList = this.state.memoryBlockList;
     let id;
 
-    if(BlockList.length === 0){
+    if (BlockList.length === 0) {
       id = 0;
-    }else{
-      id = BlockList[BlockList.length-1].id + 1;
+    } else {
+      id = BlockList[BlockList.length - 1].id + 1;
     }
 
     let memoryBlock = {
@@ -173,6 +173,22 @@ export class RoundRobin extends React.Component {
     });
   }
 
+  findBlockByProcessId(idProcess) {
+    let list = this.state.memoryBlockList;
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].processId === idProcess) {
+        list[i].isWorking = false;
+        list[i].processId =  '';
+        list[i].unusedSize = list[i].totalSize;
+        list[i].usedSize = 0;
+      }
+    }
+
+    this.setState({
+      memoryBlockList: list
+    })
+  }
+
   scheduler = () => {
     setInterval(() => {
       console.log("se passou 1 segundo");
@@ -199,7 +215,7 @@ export class RoundRobin extends React.Component {
             //memory
             process = listProcesses[0];
             block = this.newMemoryBlock(process);
-            if(memoriaFreeSpace - block.totalSize >= 0){
+            if (memoriaFreeSpace - block.totalSize >= 0) {
               memoriaFreeSpace = memoriaFreeSpace - block.totalSize;
             }
             this.bestFit(block);
@@ -229,6 +245,8 @@ export class RoundRobin extends React.Component {
         }
       }
 
+      //memory
+      let idProcess;
       for (let i = 0; i < listCores.length; i++) {
         timeProcessed = this.state.listCores[i].timeProcessed;
         if (listCores[i].isWorking === true) {
@@ -259,6 +277,11 @@ export class RoundRobin extends React.Component {
             processId: listCores[i].processId,
             deadLine: 0
           });
+
+          //memory
+          idProcess = listCores[i].processId;
+          //console.log(idProcess);
+
           listCores[i] = {
             key: { i },
             totalTime: 0,
@@ -268,6 +291,9 @@ export class RoundRobin extends React.Component {
             fulltime: 0
           };
         }
+
+        //memory
+        this.findBlockByProcessId(idProcess);
 
         //console.log("tempo atual do core: " + listCores[i].totalTime);
 
