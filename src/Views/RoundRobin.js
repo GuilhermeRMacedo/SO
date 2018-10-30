@@ -173,21 +173,21 @@ export class RoundRobin extends React.Component {
     });
   }
 
-  findBlockByProcessId(idProcess) {
-    let list = this.state.memoryBlockList;
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].processId === idProcess) {
-        list[i].isWorking = false;
-        list[i].processId =  '';
-        list[i].unusedSize = list[i].totalSize;
-        list[i].usedSize = 0;
-      }
-    }
+  // findBlockByProcessId(idProcess) {
+  //   let list = this.state.memoryBlockList;
+  //   for (let i = 0; i < list.length; i++) {
+  //     if (list[i].processId === idProcess) {
+  //       list[i].isWorking = false;
+  //       list[i].processId =  '';
+  //       list[i].unusedSize = list[i].totalSize;
+  //       list[i].usedSize = 0;
+  //     }
+  //   }
 
-    this.setState({
-      memoryBlockList: list
-    })
-  }
+  //   this.setState({
+  //     memoryBlockList: list
+  //   })
+  // }
 
   scheduler = () => {
     setInterval(() => {
@@ -245,8 +245,6 @@ export class RoundRobin extends React.Component {
         }
       }
 
-      //memory
-      let idProcess;
       for (let i = 0; i < listCores.length; i++) {
         timeProcessed = this.state.listCores[i].timeProcessed;
         if (listCores[i].isWorking === true) {
@@ -278,10 +276,6 @@ export class RoundRobin extends React.Component {
             deadLine: 0
           });
 
-          //memory
-          idProcess = listCores[i].processId;
-          //console.log(idProcess);
-
           listCores[i] = {
             key: { i },
             totalTime: 0,
@@ -291,11 +285,6 @@ export class RoundRobin extends React.Component {
             fulltime: 0
           };
         }
-
-        //memory
-        this.findBlockByProcessId(idProcess);
-
-        //console.log("tempo atual do core: " + listCores[i].totalTime);
 
         listCores[i].timeProcessed = timeProcessed;
       }
