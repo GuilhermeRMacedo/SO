@@ -14,6 +14,7 @@ import Buttons from "../Components/Buttons";
 import { Processes } from "../Components/Processes";
 import { Cores } from "../Components/Cores";
 import { Memory } from "../Components/Memory";
+import { AbortedProcesses } from '../Components/AbortedProcesses'
 
 export class RoundRobin extends React.Component {
   static navigationOptions = {
@@ -155,13 +156,14 @@ export class RoundRobin extends React.Component {
 
       if (bestIndex !== -1) {
         BlockList[bestIndex].isWorking = true;
-        BlockList[bestIndex].id = "0";
+        BlockList[bestIndex].id = "novo";
         BlockList[bestIndex].processId = memoryBlock.processId;
         BlockList[bestIndex].unusedSize =
           memoryBlockList[bestIndex].totalSize - memoryBlock.totalSize;
       } else {
         //erro
-        console.log("erro");
+        //console.log("erro ", memoryBlock.processId);
+        this.findAndRemoveProcessByProcessId(memoryBlock.processId);
       }
     }
 
@@ -173,21 +175,39 @@ export class RoundRobin extends React.Component {
     });
   }
 
-  // findBlockByProcessId(idProcess) {
-  //   let list = this.state.memoryBlockList;
-  //   for (let i = 0; i < list.length; i++) {
-  //     if (list[i].processId === idProcess) {
-  //       list[i].isWorking = false;
-  //       list[i].processId =  '';
-  //       list[i].unusedSize = list[i].totalSize;
-  //       list[i].usedSize = 0;
-  //     }
-  //   }
+  findAndRemoveProcessByProcessId(processId) {
+    listProcesses = this.state.listProcesses;
+    abortedProcesses = this.state.abortedProcesses;
+    for (let i = 0; i < listProcesses.length; i++) {
+      if (listProcesses[i].processId === processId) {
+        //return listProcesses[i];
+        //console.log("aqui ", listProcesses[i].processId);
+        abortedProcesses.push(listProcesses.shift());
+      }
+    }
 
-  //   this.setState({
-  //     memoryBlockList: list
-  //   })
-  // }
+    this.setState({
+      listProcesses: listProcesses,
+      abortedProcesses: abortedProcesses
+    })
+
+  }
+
+  resetBlockByProcessId(idProcess) {
+    let list = this.state.memoryBlockList;
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].processId === idProcess) {
+        list[i].isWorking = false;
+        list[i].processId =  '';
+        list[i].unusedSize = list[i].totalSize;
+        list[i].usedSize = 0;
+      }
+    }
+
+    this.setState({
+      memoryBlockList: list
+    })
+  }
 
   scheduler = () => {
     setInterval(() => {
@@ -209,11 +229,44 @@ export class RoundRobin extends React.Component {
         listCores[i] = this.state.listCores[i];
       }
 
+      memoryBlockList = this.state.memoryBlockList;
       for (let i = 0; i < listCores.length; i++) {
         if (listCores[i].isWorking === false) {
           if (listProcesses[0] !== undefined) {
             //memory
             process = listProcesses[0];
+
+            isBlockInMemory = false;
+            for (let j = 0; j < memoryBlockList.length; j++) {
+              //console.log("na memoria ", memoryBlockList[j].processId);
+              //console.log("comparando ", process.processId);
+
+              console.log("bloco de memoria ", memoryBlockList[j].id, " está trabalhando: ", memoryBlockList[j].isWorking);
+              if (memoryBlockList[j].processId === process.processId) {
+                isBlockInMemory = true;
+                //console.log("estado1 ", isBlockInMemory);
+              }
+              // if (memoryBlockList[j].processId === process.processId) {
+              //   isBlockInMemory = true;
+              //   console.log("bloco já está na memoria");
+              // }
+            }
+            
+            if (isBlockInMemory) {
+              listCores[i] = listProcesses.shift();
+              listCores[i].isWorking = true;
+            } else {
+              block = this.newMemoryBlock(process);
+              if (memoriaFreeSpace - block.totalSize >= 0) {
+                memoriaFreeSpace = memoriaFreeSpace - block.totalSize;
+              }
+              this.bestFit(block);
+
+              listCores[i] = listProcesses.shift();
+              listCores[i].isWorking = true;
+            }
+
+            /*
             block = this.newMemoryBlock(process);
             if (memoriaFreeSpace - block.totalSize >= 0) {
               memoriaFreeSpace = memoriaFreeSpace - block.totalSize;
@@ -222,6 +275,7 @@ export class RoundRobin extends React.Component {
 
             listCores[i] = listProcesses.shift();
             listCores[i].isWorking = true;
+            */
           }
         }
       }
@@ -230,6 +284,9 @@ export class RoundRobin extends React.Component {
         listCores[i].totalTime--;
 
         if (listCores[i].totalTime === 0) {
+          //console.log("processo finalizado ", listCores[i].processId);
+          this.resetBlockByProcessId(listCores[i].processId);
+
           listCores[i] = {
             totalTime: 0,
             processId: "",
@@ -333,7 +390,10 @@ export class RoundRobin extends React.Component {
               memoryBlockList={this.state.memoryBlockList}
             />
           </View>
-          <View style={{ marginLeft: 110 }}>
+          <View style={{ marginLeft: 5 }}>
+            <AbortedProcesses abortedProcesses={this.state.abortedProcesses} />
+          </View>
+          <View style={{ marginLeft: 1 }}>
             <Cores
               listCores={this.state.listCores}
               quantum={this.state.quantum}
