@@ -77,7 +77,7 @@ export class RoundRobin extends React.Component {
       processId: "NP" + (Math.random() * 1000).toFixed(0),
       deadLine: 0,
       //bytesCost: bytesCost
-      bytesCost: 49
+      bytesCost: 51
     });
     let lastProcessInsertedId = list[list.length - 1].processId;
     this.setState({
@@ -129,7 +129,8 @@ export class RoundRobin extends React.Component {
 
   bestFit(memoryBlock) {
     let BlockList = this.state.memoryBlockList;
-    let memoryFreeSpace = this.state.memoriaFreeSpace;
+    //let memoryFreeSpace = this.state.memoriaFreeSpace;
+    memoriaFreeSpace = parseInt(this.state.memoriaFreeSpace);
 
     let bestIndex = -1;
     //let bestSpace = Math.max();
@@ -139,7 +140,14 @@ export class RoundRobin extends React.Component {
       if (BlockList[i].isWorking === false) {
         //console.log("bloco ", BlockList[i], " está livre");
         //save index
-        space = BlockList[i].totalSize - memoryBlock.totalSize;
+        console.log(BlockList[i].totalSize);
+        console.log(memoryBlock.totalSize);
+        if (BlockList[i].totalSize - memoryBlock.totalSize >= 0) {
+          space = BlockList[i].totalSize - memoryBlock.totalSize;
+        } else {
+          space = Number.MAX_SAFE_INTEGER;
+        }
+        //space = BlockList[i].totalSize - memoryBlock.totalSize;
         //console.log("space", space);
         //console.log("bestSpace", bestSpace);
         if (space < bestSpace) {
@@ -153,8 +161,8 @@ export class RoundRobin extends React.Component {
     //console.log("bestIndex: ", bestIndex);
 
     if (bestIndex === -1) {
-      if (memoryFreeSpace >= memoryBlock.totalSize) {
-        //memoryFreeSpace = memoryFreeSpace - memoryBlock.totalSize;
+      if (memoriaFreeSpace >= memoryBlock.totalSize) {
+        memoriaFreeSpace = memoriaFreeSpace - memoryBlock.totalSize;
         BlockList.push({
           isWorking: true,
           id: memoryBlock.id,
@@ -168,8 +176,8 @@ export class RoundRobin extends React.Component {
       }
     } else {
       BlockList[bestIndex].isWorking = true,
-      BlockList[bestIndex].processId = memoryBlock.processId,
-      BlockList[bestIndex].usedSize = memoryBlock.totalSize
+        BlockList[bestIndex].processId = memoryBlock.processId,
+        BlockList[bestIndex].usedSize = memoryBlock.totalSize
     }
 
     /*
@@ -213,8 +221,8 @@ export class RoundRobin extends React.Component {
     //console.log(BlockList);
 
     this.setState({
-      memoryBlockList: BlockList
-      //memoriaFreeSpace: this.memoryFreeSpace
+      memoryBlockList: BlockList,
+      memoriaFreeSpace: memoriaFreeSpace
     });
   }
 
@@ -251,7 +259,7 @@ export class RoundRobin extends React.Component {
     });
   }
 
-  findProcessByProcessId(processId) {}
+  findProcessByProcessId(processId) { }
 
   scheduler = () => {
     setInterval(() => {
@@ -312,7 +320,7 @@ export class RoundRobin extends React.Component {
 
               block = this.newMemoryBlock(process);
               if (memoriaFreeSpace - block.totalSize >= 0) {
-                memoriaFreeSpace = memoriaFreeSpace - block.totalSize;
+                //memoriaFreeSpace = memoriaFreeSpace - block.totalSize;
               }
               this.bestFit(block);
 
@@ -339,7 +347,7 @@ export class RoundRobin extends React.Component {
 
         if (listCores[i].totalTime === 0) {
           //console.log("processo finalizado ", listCores[i].processId);
-          memoriaFreeSpace = memoriaFreeSpace + listCores[i].bytesCost;
+          //memoriaFreeSpace = memoriaFreeSpace + listCores[i].bytesCost;
           //console.log("bytesCost: ", listCores[i].bytesCost);
           //console.log("processo2", listProcesses[0]);
           //console.log("listaCores: ", listCores)
