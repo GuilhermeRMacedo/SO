@@ -12,7 +12,7 @@ const block = (props) => (
 
 const styles = StyleSheet.create({
     block: {
-        height: 76,
+        height: 146,
         //width: 40,    //para tamanho fixo
         marginTop: 1,
         borderWidth: 1,

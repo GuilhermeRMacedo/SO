@@ -134,8 +134,8 @@ export class RoundRobin extends React.Component {
       if (BlockList[i].isWorking === false) {
         //console.log("bloco ", BlockList[i], " está livre");
         //save index
-        console.log(BlockList[i].totalSize);
-        console.log(memoryBlock.totalSize);
+        //console.log(BlockList[i].totalSize);
+        //console.log(memoryBlock.totalSize);
         if (BlockList[i].totalSize - memoryBlock.totalSize >= 0) {
           space = BlockList[i].totalSize - memoryBlock.totalSize;
         } else {
@@ -315,10 +315,21 @@ export class RoundRobin extends React.Component {
         listCores[i].timeProcessed = timeProcessed;
       }
 
+      //fragmentacao interna
+      let internalFragmentation = 0;
+      let totalSize = 0;
+      let totalUsed = 0;
+      for(let i = 0; i < memoryBlockList.length; i++){
+        totalSize = totalSize + memoryBlockList[i].totalSize;
+        totalUsed = totalUsed + memoryBlockList[i].usedSize;
+      }
+      internalFragmentation = totalSize - totalUsed;
+
       this.setState({
         listProcesses: listProcesses,
         listCores: listCores,
-        memoriaFreeSpace: memoriaFreeSpace
+        memoriaFreeSpace: memoriaFreeSpace,
+        internalFragmentation: internalFragmentation
       });
     }, 1000);
   };
@@ -349,6 +360,7 @@ export class RoundRobin extends React.Component {
             memoryFullSize={this.state.memoria}
             memoryBlockList={this.state.memoryBlockList}
             memoriaFreeSpace={this.state.memoriaFreeSpace}
+            internalFragmentation={this.state.internalFragmentation}
           />
         </View>
 

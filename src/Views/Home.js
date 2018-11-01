@@ -23,7 +23,8 @@ export class Home extends React.Component {
         quantumHasValue: false,
         abortedProcesses: [],
         memoryBlockList: [],
-        memoriaFreeSpace: ''
+        memoriaFreeSpace: '',
+        internalFragmentation: 0
     }
 
     placeCoresChangedHandler = (input) => {

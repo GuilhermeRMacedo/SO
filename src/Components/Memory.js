@@ -24,18 +24,9 @@ export class Memory extends React.Component {
                         />
                     })}
 
-                    {/* <Block
-                        id = {'0'}
-                        totalSize={(20/this.props.memoryFullSize)*298}
-                    />
-                    <Block
-                        id = {'1'}
-                        totalSize={(30/this.props.memoryFullSize)*298}
-                    /> */}
-
-
                 </View>
                 <Text style={{ color: '#fff', marginLeft: 210}}>Livre: {this.props.memoriaFreeSpace}Mb</Text>
+                <Text style={{ color: '#fff', marginLeft: 110}}>Fragmentação interna: {this.props.internalFragmentation}Mb</Text>
             </View>
         )
     }
@@ -50,7 +41,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#fff',
         borderRadius: 2,
-        height: 80,
+        height: 150,
         flexDirection: 'row'
     }
 })
