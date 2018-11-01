@@ -15,6 +15,8 @@ export class Processes extends React.Component {
                     totalTime={i.totalTime}
                     processId={i.processId}
                     deadLine={i.deadLine}
+                    bytesCost={i.bytesCost}
+                    bytesCostIsNumber={typeof i.bytesCost === Number ? true : false}
                 />
                 })}
                 

@@ -7,7 +7,7 @@ export class Memory extends React.Component {
     render() {
         return (
             <View style={styles.memory}>
-                <Text style={{ color: '#fff' }}>Memoria: {this.props.memoryFullSize}Kb</Text>
+                <Text style={{ color: '#fff' }}>Memoria: {this.props.memoryFullSize}Mb</Text>
                 <View style={styles.content}>
 
                     {/* {console.log(this.props.memoryBlockList + " -bug aqui")}  */}
@@ -35,7 +35,7 @@ export class Memory extends React.Component {
 
 
                 </View>
-                <Text style={{ color: '#fff', marginLeft: 210}}>Livre: {this.props.memoriaFreeSpace}Kb</Text>
+                <Text style={{ color: '#fff', marginLeft: 210}}>Livre: {this.props.memoriaFreeSpace}Mb</Text>
             </View>
         )
     }
