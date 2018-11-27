@@ -9,6 +9,7 @@ import Processes from '../Components/Processes'
 import Cores from '../Components/Cores'
 
 import Block from '../Components/Block'
+import Page from '../Components/Page'
 
 export class Home extends React.Component {
     static navigationOptions = {
@@ -24,7 +25,9 @@ export class Home extends React.Component {
         abortedProcesses: [],
         memoryBlockList: [],
         memoriaFreeSpace: '',
-        internalFragmentation: 0
+        internalFragmentation: 0,
+        HD: '',
+        pagina: ''
     }
 
     placeCoresChangedHandler = (input) => {
@@ -60,6 +63,18 @@ export class Home extends React.Component {
         }
     }
 
+    placeHDChangeHandler = (input) => {
+        this.setState({
+            HD: input
+        })
+    }
+
+    placePaginaChangeHandler = (input) => {
+        this.setState({
+            pagina: input
+        })
+    }
+
     onPress = () => {
         Alert.alert('apertou botao')
     }
@@ -71,12 +86,15 @@ export class Home extends React.Component {
         return (
             <View style={styles.mom}>
 
-                {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}</Text> */}
+                {/* <Text style={{ paddingTop: 20 }}>Cores: {this.state.cores}, Processos: {this.state.processos}, Quantum: {this.state.quantum}, QuantumHasValue: {this.state.quantumHasValue ? "true" : "false"}, HD: {this.state.HD}, Página: {this.state.pagina}</Text> */}
                 <Header />
+                <Page />
                 <Inputs
                     placeCoresChangedHandler={this.placeCoresChangedHandler}
                     placeProcessosChangedHandler={this.placeProcessosChangedHandler}
                     placeMemoriaChangedHandler={this.placeMemoriaChangedHandler}
+                    placeHDChangeHandler={this.placeHDChangeHandler}
+                    placePaginaChangeHandler={this.placePaginaChangeHandler}
                 />
                 <Buttons
                     navigate={navigate}

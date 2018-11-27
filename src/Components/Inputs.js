@@ -24,6 +24,20 @@ const inputs = (props) => (
             underlineColorAndroid="#660066" 
             onChangeText = {props.placeMemoriaChangedHandler}
         />
+        <TextInput
+            placeholder='HD'
+            style={styles.placeInput}
+            keyboardType='numeric'  
+            underlineColorAndroid="#660066"
+            onChangeText = {props.placeHDChangeHandler}           
+        />
+        <TextInput
+            placeholder='Página'
+            style={styles.placeInput}
+            keyboardType='numeric'  
+            underlineColorAndroid="#660066"
+            onChangeText = {props.placePaginaChangeHandler}           
+        />
     </View>
 )
 
